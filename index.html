@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #formbox
+        {
+             width: 60%;
+             height: 60vh;
+             border: 2px solid black;
+             margin-left: 40vh;
+             background-color: aqua;
+        }
+        #heading
+        {
+            text-align: center;
+            background-image: linear-gradient(red,yellow);
+        }
+        #namediv
+        {
+            margin: 10px;
+        }
+        #amountdiv
+        {
+            margin: 10px;
+        }
+        #Namebox
+        {
+            width: 300px;
+            height: 25px;
+            margin-left: 50px;
+        }
+        #Namebox:hover
+        {
+            box-shadow: 5px -3px 5px  orangered;
+        }
+        #Amountbox
+        {
+            width: 300px;
+            height: 25px;
+            margin-left: 35px;
+        }
+        #Amountbox:hover
+        {
+            box-shadow: 5px -3px 5px  orangered;
+        }
+        .btn
+        {
+            text-align: center;
+            
+        }
+        #thname
+        {
+           padding: 20px  100px 50px 0px;
+        }
+        #thamount
+        {
+            padding: 20px  100px 50px 0px;
+        }
+        #thdelete
+        {
+            padding: 20px  100px 50px 0px;
+        }
+        .thistable
+        {
+            margin-left: 300px;
+            
+        }
+        #savebtn
+        {
+            background-image: linear-gradient(white,red);
+        }
+        #deletebtn
+        {
+            background-image: linear-gradient( white,rgb(0, 225, 255));
+        }
+        #resetbtn
+        {
+           background-image: linear-gradient( white,orange);
+        }
+        #btnEdit
+        {
+            background-image: linear-gradient(white,green);
+        }
+        #btnDelete
+        {
+            background-image: linear-gradient(white,rgb(235, 177, 19));
+        }
+        #btnUpdate
+        {
+            background-image: linear-gradient(white,rgb(0, 128, 128));
+        }
+        #thselect
+        {
+            padding: 20px  100px 50px 0px;
+        }
+    </style>
+</head>
+<body>
+    <div id="formbox">
+        <div id="heading">
+            <h2>Enter Name & Amount Here</h2>
+            <hr>
+        </div>
+        <div id="namediv">
+            Name
+            <input type="text" placeholder="Enter Name" id="Namebox">
+        </div>
+        <div id="amountdiv">
+            Amount
+            <input type="text" placeholder="Enter Amount" id="Amountbox">
+        </div>
+        <div class="btn">
+            <button onclick="save()" id="savebtn">Save</button>
+            <button onclick="reset()" id="resetbtn">Reset</button>
+            <button onclick="deletefun()" id="deletebtn">DeleteSelected</button>
+        </div>
+    </div>
+   
+    <table class="thistable" >
+        <thead>
+           <tr>
+            <!-- <th id="thselect"> <input type="checkbox" id="chk" onclick="selectfun()"> Select</th> -->
+            <th id="thname">Name</th>
+            <th id="thamount">Amount</th>
+            <th id="thdelete">Delete</th>
+           </tr>
+        </thead>
+        <tbody id="bdy">
+
+        </tbody>
+    </table>
+    <script>
+        function save()
+        {
+           name=document.getElementById("Namebox").value
+           amount=document.getElementById("Amountbox").value
+           getValuefromSave(name,amount)
+        }
+        function getValuefromSave(name,amount)
+        {
+            row=document.createElement("tr")
+            cell1=document.createElement("td")
+            cell2=document.createElement("td")
+            cell3=document.createElement("td")
+            // cell0=document.createElement("td")
+            
+            // create checkbox icon
+            // selectbtn=document.createElement("input")
+            // selectbtn.setAttribute("value","")
+            // selectbtn.setAttribute("type","checkbox")
+            // cell0.appendChild(selectbtn)
+
+
+
+            // cell1.innerHTML=name;
+            // cell2.innerHTML=amount;  direct accessing
+            txtName=document.createElement("span")
+            txtAmount=document.createElement("span")
+            txtName.style.backgroundColor="lightgray"
+            txtAmount.style.backgroundColor="yellow"
+            EditName=document.createElement("input")
+            EditAmount=document.createElement("input")
+
+            EditAmount.style.display="none"
+            EditName.style.display="none"
+
+
+            txtName.innerHTML=name;
+            txtAmount.innerHTML=amount;
+
+           // create edit btn
+            editBtn=document.createElement("input")
+            editBtn.setAttribute("value","Edit")
+            editBtn.setAttribute("type","button")
+            editBtn.setAttribute("onclick","Edit(this)")
+            editBtn.style.width="50px"
+            editBtn.id="btnEdit"
+
+            // create delete btn
+            Deletebtn=document.createElement("input")
+            Deletebtn.setAttribute("value","Delete")
+            Deletebtn.setAttribute("type","button")
+            Deletebtn.setAttribute("onclick","Delete(this)")
+            Deletebtn.style.width="50px"
+            Deletebtn.id="btnDelete"
+
+            
+
+            // create Update btn
+            Updatebtn=document.createElement("input")
+            Updatebtn.setAttribute("value","Update")
+            Updatebtn.setAttribute("type","button")
+            Updatebtn.setAttribute("onclick","Update(this)")
+            Updatebtn.style.width="50px"
+            Updatebtn.style.display="none"
+            Updatebtn.id="btnUpdate"
+
+
+            cell1.appendChild(txtName)
+            cell1.appendChild(EditName)
+
+            cell2.appendChild(txtAmount)
+            cell2.appendChild(EditAmount)
+             
+            cell3.appendChild(editBtn)
+            cell3.appendChild(Updatebtn)
+            cell3.appendChild(Deletebtn)
+            
+            // row.appendChild(cell0)
+            row.appendChild(cell1)
+            row.appendChild(cell2)
+            row.appendChild(cell3)
+            document.getElementById("bdy").appendChild(row)
+        }
+        function reset()
+        {
+            document.getElementById("Namebox").value=" ";
+            document.getElementById("Amountbox").value=" ";
+        }
+        function Edit(OButton)
+        {
+            row=OButton.parentNode.parentNode
+            row.cells[0].childNodes[1].value= row.cells[0].childNodes[0].innerHTML
+            row.cells[0].childNodes[0].style.display="none"
+            row.cells[0].childNodes[1].style.display="block"
+              
+
+            // hide Edit buttton and show update button
+
+            row.cells[2].childNodes[0].style.display="none"
+            row.cells[2].childNodes[1].style.display="block"
+        }
+        function Update(OButton)
+        {
+            row=OButton.parentNode.parentNode
+            row.cells[0].childNodes[0].innerHTML=row.cells[0].childNodes[1].value
+            row.cells[0].childNodes[0].style.display="block"
+            row.cells[0].childNodes[1].style.display="none"
+            // hide update button and show Edit button
+            row.cells[2].childNodes[0].style.display="block"
+            row.cells[2].childNodes[1].style.display="none"
+        }
+        function Delete(OButton)
+        {
+            OButton.parentNode.parentNode.style.display="none"
+        }
+        // function deletefun()
+        // {
+        //     row=document.getElementById("bdy").getElementsByTagName("tr")
+        //     for(i=0;i<row.length;i++)
+        //     {
+        //         cells=row[i].getElementsByTagName("td")
+        //         ck=cells[0].getElementsByTagName("input")
+        //         if(ck[0].checked==true)
+        //         {
+        //             row[i].style.display="none"
+        //         }
+        //     }
+        // }
+        // function selectfun()
+        // {
+        //     if(document.getElementById("chk").checked==true)
+        //     {
+        //         row=document.getElementById("bdy").getElementsByTagName("tr")
+        //         for(i=0;i<row.length;i++)
+        //         {
+        //             cells=row[i].getElementsByTagName("td")
+        //             ck=cells[0].getElementsByTagName("input")
+        //             ck[0].checked=true;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         row=document.getElementById("bdy").getElementsByTagName("tr")
+        //         for(i=0;i<row.length;i++)
+        //         {
+        //             cells=row[i].getElementsByTagName("td")
+        //             ck=cells[0].getElementsByTagName("input")
+        //             ck[0].checked=false;
+        //         }
+        //     }
+        // }
+    </script>
+</body>
+</html>
